@@ -1,13 +1,11 @@
 package models
 
-import "time"
-
 type BaseModel struct {
 	ID        string
 	Title     string
 	Source    string
 	Ref       string
-	CrawledAt time.Time
-	CreatedAt time.Time
+	CrawledAt string // RFC3339
+	CreatedAt string // RFC3339
 	IsActive  bool
 }
