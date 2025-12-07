@@ -1,7 +1,9 @@
 package crawler
 
 import (
+	"fmt"
 	"log"
+	"os"
 
 	"github.com/gocolly/colly/v2"
 )
@@ -13,6 +15,12 @@ func Crawl[T any](url string, cfg CrawlerConfig, setupParser func(*colly.Collect
 	)
 
 	results := []T{}
+
+	// HTML 보기 위해 파일로 저장
+	c.OnResponse(func(r *colly.Response) {
+		_ = os.WriteFile("saramin_dump.html", r.Body, 0644)
+		fmt.Println("HTML saved → saramin_dump.html")
+	})
 
 	// 요청 전 로깅
 	c.OnRequest(func(r *colly.Request) {
