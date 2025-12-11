@@ -1,15 +1,15 @@
 package crawler
 
 import (
-	"fmt"
 	"log"
-	"os"
+
+	"web-crawler/utils"
 
 	"github.com/gocolly/colly/v2"
 )
 
 // Crawl fetches and parses data from the given URL using the provided parser setup function
-func Crawl[T any](url string, cfg CrawlerConfig, setupParser func(*colly.Collector, *[]T)) ([]T, error) {
+func Crawl[T any](siteName string, url string, cfg CrawlerConfig, setupParser func(*colly.Collector, *[]T)) ([]T, error) {
 	c := colly.NewCollector(
 		colly.UserAgent("Mozilla/5.0 (compatible; WebCrawler/1.0)"),
 	)
@@ -18,8 +18,7 @@ func Crawl[T any](url string, cfg CrawlerConfig, setupParser func(*colly.Collect
 
 	// HTML 보기 위해 파일로 저장
 	c.OnResponse(func(r *colly.Response) {
-		_ = os.WriteFile("saramin_dump.html", r.Body, 0644)
-		fmt.Println("HTML saved → saramin_dump.html")
+		_ = utils.SaveResultAsFile(siteName+".html", string(r.Body))
 	})
 
 	// 요청 전 로깅
