@@ -30,3 +30,14 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
+#
+
+# dump html directories
+dumps/
+
+# Apple shit
+.DS_Store
+
+# Output
+web-crawler
+web_crawler
